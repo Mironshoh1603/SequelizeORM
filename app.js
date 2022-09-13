@@ -34,7 +34,7 @@ app.get("/user", async (req, res, next) => {
 });
 app.get("/user/:uuid", async (req, res, next) => {
   try {
-    const users = await User.findOne();
+    const users = await User.findOne({ where: { uuId: req.params.uuid } });
     res.status(200).json({
       status: "Succes",
       data: users,
@@ -52,7 +52,7 @@ app.post("/post", async (req, res) => {
   try {
     const user = await User.findOne({
       where: {
-        uuid: userUuid,
+        uuId: userUuid,
       },
     });
     const post = await Post.create({ body, userId: user.id });
